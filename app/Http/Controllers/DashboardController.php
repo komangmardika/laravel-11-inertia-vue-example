@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoginHistory;
 use App\Models\Position;
 use App\Models\Unit;
 use App\Models\User;
@@ -9,7 +10,6 @@ use App\Models\UserPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Nette\Schema\ValidationException;
 
 class DashboardController extends Controller
 {
@@ -59,6 +59,23 @@ class DashboardController extends Controller
         return response()->json($user);
 
 
+    }
+
+    public function dashboardData(Request $request): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'employee' => User::whereBetween('created_at', [$request->start, $request->end])->count(),
+            'unit' => Unit::all()->count(),
+            'position' => Position::all()->count(),
+            'loggedIn' => LoginHistory::whereBetween('created_at', [$request->start, $request->end])->count(),
+            'top10LoggedIn' => LoginHistory::query()
+                                ->join('users', 'login_histories.user_id', '=', 'users.id')
+                                ->select('login_histories.id', 'login_histories.created_at', 'users.name', 'users.username')
+                                ->whereBetween('login_histories.created_at', [$request->start, $request->end])
+                                ->orderBy('login_histories.id', 'desc')
+                                ->limit(10)
+                                ->get()
+        ]);
     }
 }
 

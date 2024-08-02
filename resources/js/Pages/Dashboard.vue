@@ -1,73 +1,107 @@
 <template>
-    <div class="container mt-5">
-        <div>Welcome to the Dashboard, <b>{{user.name}}</b></div>
-        <p>This page is protected and only accessible to authenticated users.</p>
-
-        <button class="btn btn-primary" @click="showDialog">Add New User</button>
-    </div>
-    <NewUserDialog :title="'Add New User'" :isVisible="isDialogVisible" @close="closeDialog">
-        <form @submit.prevent="addNewUser">
-            <div class="form-group mb-3">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" class="form-control" v-model="form.name" required>
+    <Main :auth="auth">
+        <h1 style="font-size: 20px">Dashboard</h1>
+        <div class="row mt-5">
+            <div class="col-3">
+                <div class="form-group mb-3">
+                    <label for="start">From:</label>
+                    <input type="date" v-model="start" id="start" class="form-control">
+                </div>
             </div>
-
-            <div class="form-group mb-3">
-                <label for="username">Username:</label>
-                <input type="email" id="username" class="form-control" v-model="form.username" required>
+            <div class="col-3">
+                <div class="form-group mb-3">
+                    <label for="start">Until:</label>
+                    <input type="date" v-model="end" id="end" class="form-control">
+                </div>
             </div>
-
-            <div class="form-group mb-3">
-                <label for="username">Password:</label>
-                <input type="password" id="password" class="form-control" v-model="form.password" required>
+            <div class="col-3">
+                <button class="btn btn-primary mt-3" @click="applyFilter">Filter</button>
             </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Total Employees
+                            </div>
+                            <div class="card-body">
+                                <b v-if="dashboardData.data">{{dashboardData.data.employee}}</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Total of Logged In Users
+                            </div>
+                            <div class="card-body">
+                                <b v-if="dashboardData.data">{{dashboardData.data.loggedIn}} times</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group mb-3">
-                <label for="username">Join Date:</label>
-                <input type="date" id="join_date" class="form-control" v-model="form.join_date" required>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Total Unit
+                            </div>
+                            <div class="card-body">
+                                <b v-if="dashboardData.data">{{dashboardData.data.unit}}</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                Total Position
+                            </div>
+                            <div class="card-body">
+                                <b v-if="dashboardData.data">{{dashboardData.data.position}}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="col-6">
+                <b class="mb-4">Top 10 Logged In</b>
+                <table class="mt-4 table table-bordered table-striped" v-if="dashboardData.data">
+                    <thead>
+                        <tr>
+                            <th style="text-align: right">No.</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Logged In At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in dashboardData.data.top10LoggedIn" :key="index">
+                            <td style="text-align: right">{{index + 1}}.</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.username}}</td>
+                            <td>{{ formattingDate(item.created_at) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <div class="form-group mb-3">
-                <label>Unit:</label>
-                <v-select
-                    taggable
-                    push-tags
-                    placeholder="Type and press enter to add a new option"
-                    :options="units" v-model="form.unit_id" />
-            </div>
 
-            <div class="form-group mb-3">
-                <label>Position:</label>
-                <v-select
-                    taggable
-                    push-tags
-                    :options="positions"
-                    v-model="selectedPosition" />
-                <button type="button" class="mt-3 btn btn-danger" @click="addItem">Add Position</button>
-            </div>
 
-            <div class="mb-3">
-                <ul>
-                    <li v-for="(item, index) in form.positions" :key="index">
-                        {{ item }}
-                    </li>
-                </ul>
-            </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Add New User</button>
-            </div>
-        </form>
-    </NewUserDialog>
+    </Main>
 </template>
 
 <script>
-import NewUserDialog from "./Components/NewUserDialog.vue";
-import {ref, onMounted} from "vue";
+import TopBar from "./Components/TopBar.vue";
+import SideNav from "./Components/SideNav.vue";
+import Main from "./Main.vue";
+import {onMounted, ref} from "vue";
+import axios from "axios";
 import {usePage} from "@inertiajs/inertia-vue3";
-import axios from 'axios';
-import 'vue-select/dist/vue-select.css'; // Import CSS
-import vSelect from 'vue-select';
 
 export default {
     name: 'Dashboard',
@@ -75,95 +109,65 @@ export default {
         auth: Object
     },
     components: {
-      NewUserDialog,
-      vSelect
+        Main,
+        TopBar,
+        SideNav
 
-    },
-    computed: {
-      user() {
-          return this.auth.user;
-      }
     },
     methods: {
-        showDialog() {
-            this.isDialogVisible = true;
-        },
-        closeDialog() {
-            this.isDialogVisible = false;
-        },
-        addItem() {
-            this.form.positions.push(this.selectedPosition.label);
-            this.selectedPosition = null;
-        },
+      formattingDate(isoString) {
+          const date = new Date(isoString);
+
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+          const day = String(date.getDate()).padStart(2, '0');
+          const hours = String(date.getHours()).padStart(2, '0');
+          const minutes = String(date.getMinutes()).padStart(2, '0');
+          const seconds = String(date.getSeconds()).padStart(2, '0');
+
+          return `${day}/${month}/${year}`;
+      }
     },
     setup() {
+        const dashboardData = ref({});
+        const start = ref('1900-01-01');
 
-        const units = ref([]);
-        const selectedUnit = ref(null);
-        const isDialogVisible = ref(false); // Declare as ref
-        const positions = ref([]);
-        const selectedPosition = ref(null);
+        const formatDate =  (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const day = String(date.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        };
+
+        const end = ref(formatDate(new Date()));
+
+        const applyFilter = async () => {
+            dashboardData.value = await axios.get(`/dashboard-data?start=${start.value}&end=${end.value}`);
+        };
 
         onMounted(async () => {
-            const responseUnit = await axios.get('/units');
-            console.log(responseUnit);
-            units.value = responseUnit.data.map(unit => ({
-                id: unit.unit_name,
-                label: unit.unit_name
-            }));
-
-            const responsePosition = await axios.get('/positions');
-            console.log(responsePosition);
-            positions.value = responsePosition.data.map(position => ({
-                id: position.position_name,
-                label: position.position_name
-            }));
+            await applyFilter();
         });
-
-        const form = ref({
-            name: '',
-            username: '',
-            password: '',
-            join_date: '',
-            unit_id: '',
-            positions: []
-        });
-
-        const { errors } = usePage().props.value;
-
-        const addNewUser = () => {
-            form.value.unit_id = form.value.unit_id.label;
-            axios.post('/add-new-user', form.value).then(() => {
-                form.value.name = '';
-                form.value.username = '';
-                form.value.password = '';
-                form.value.join_date = '';
-                form.value.unit_id = '';
-                form.value.positions = [];
-
-                selectedPosition.value = [];
-                isDialogVisible.value = false;
-            }, errors => {
-                console.log(errors);
-            });
-
-
-        };
 
         return {
-            form,
-            addNewUser,
-            errors,
-            units,
-            positions,
-            selectedUnit,
-            selectedPosition,
-            isDialogVisible
+            dashboardData,
+            applyFilter,
+            start,
+            end
         };
     },
+    computed: {
+        user() {
+            return this.auth.user;
+        }
+    },
+
 };
 </script>
 
 <style scoped>
-/* Add your custom styles here if needed */
+* {
+    font-size: 12px;
+}
 </style>
