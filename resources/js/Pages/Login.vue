@@ -12,7 +12,7 @@
                     <input type="password" id="password" class="form-control mt-2" v-model="form.password" required>
                 </div>
                 <div class="d-grid mt-4">
-                    <button type="submit" class="btn orange btn-outline-dark w-100 p-2">Login</button>
+                    <button type="submit" class="btn btn-outline-primary w-100 p-2">Login</button>
                 </div>
             </form>
             <div v-if="errors && (errors.username || errors.password)" class="alert alert-danger mt-3" role="alert">

@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <button class="btn btn-primary mt-3" @click="applyFilter">Filter</button>
+                <button class="btn btn-outline-success mt-3" @click="applyFilter">Filter</button>
             </div>
         </div>
         <div class="row mt-4">
