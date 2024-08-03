@@ -1,18 +1,18 @@
 <template>
     <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="card p-4" style="width: 24rem;">
-            <h3 class="text-center mb-4">Login</h3>
+        <div class="card p-4 border-0 shadow-lg rounded-3" style="width: 22rem;">
+            <h3 class="text-center mb-4 fw-bold">Laravel 11 with InertiaJS and Vue 3</h3>
             <form @submit.prevent="login">
                 <div class="form-group mb-3">
-                    <label for="username">Username:</label>
-                    <input type="email" id="username" class="form-control" v-model="form.username" required>
+                    <label class="fw-bold" for="username">Username:</label>
+                    <input type="email" id="username" class="form-control mt-2" v-model="form.username" required>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" class="form-control" v-model="form.password" required>
+                    <label class="fw-bold" for="password">Password:</label>
+                    <input type="password" id="password" class="form-control mt-2" v-model="form.password" required>
                 </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn orange btn-outline-dark w-100 p-2">Login</button>
                 </div>
             </form>
             <div v-if="errors && (errors.username || errors.password)" class="alert alert-danger mt-3" role="alert">
@@ -53,5 +53,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add your custom styles here if needed */
+    * {
+        font-size: 12px;
+    }
 </style>

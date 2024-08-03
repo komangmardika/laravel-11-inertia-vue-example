@@ -68,7 +68,7 @@
             </div>
             <div class="col-6">
                 <b class="mb-4">Top 10 Logged In</b>
-                <table class="mt-4 table table-bordered table-striped" v-if="dashboardData.data">
+                <table class="mt-4 table table-bordered table-hover table-striped" v-if="dashboardData.data">
                     <thead>
                         <tr>
                             <th style="text-align: right">No.</th>
@@ -101,7 +101,6 @@ import SideNav from "./Components/SideNav.vue";
 import Main from "./Main.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
-import {usePage} from "@inertiajs/inertia-vue3";
 
 export default {
     name: 'Dashboard',
@@ -125,7 +124,7 @@ export default {
           const minutes = String(date.getMinutes()).padStart(2, '0');
           const seconds = String(date.getSeconds()).padStart(2, '0');
 
-          return `${day}/${month}/${year}`;
+          return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
       }
     },
     setup() {

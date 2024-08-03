@@ -1,9 +1,9 @@
 <template>
     <Main :auth="auth">
             <h1 style="font-size: 20px">Employee</h1>
-            <button class="btn btn-primary mt-5" @click="showDialog">Add New User</button>
+            <button class="btn btn-outline-primary mt-5" @click="showDialog">Add New Employee</button>
             <NewUserDialog
-                :title="'Add New User'"
+                :title="'Add New Employee'"
                 :isVisible="isDialogVisible"
                 @userAdded="refreshDataTable"
                 @close="closeDialog"></NewUserDialog>
@@ -71,7 +71,7 @@ export default {
                     }
                 },
                 columns: [
-                    { data: 'id', title: 'ID' },
+                    { data: 'id', title: 'ID', className: 'text-end' },
                     { data: 'name', title: 'Name' },
                     { data: 'username', title: 'Username' },
                     { data: 'unit', title: 'Unit' },

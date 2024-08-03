@@ -43,7 +43,7 @@
                                 push-tags
                                 :options="positions"
                                 v-model="selectedPosition" />
-                            <button type="button" class="mt-3 btn btn-danger" @click="addItem">Add Position</button>
+                            <button type="button" class="mt-3 btn btn-outline-success" @click="addItem">Add Position</button>
                         </div>
 
                         <div class="mb-3">
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Add New User</button>
+                            <button type="submit" class="btn red w-100 btn-outline-dark">Add New User</button>
                         </div>
                     </form>
                 </div>

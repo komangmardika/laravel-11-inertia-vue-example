@@ -13,16 +13,25 @@
 <script>
 export default {
     name: 'SideNav',
+    data() {
+        return {
+
+        }
+    }
 };
 </script>
 
 <style scoped>
 .sidenav {
     width: 200px;
-    height: 100vh;
+    height: 92vh;
     background-color: #f4f4f4;
     padding: 1rem;
     position: fixed;
+    margin-left: 8px;
+    margin-top: 18px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .sidenav ul {

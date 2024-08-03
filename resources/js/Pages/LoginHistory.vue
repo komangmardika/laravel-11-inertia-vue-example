@@ -60,10 +60,10 @@ export default {
                     }
                 },
                 columns: [
-                    {data: 'id', title: 'ID'},
+                    {data: 'id', title: 'ID', className: 'text-end'},
                     {data: 'name', title: 'Name'},
                     {data: 'username', title: 'Username'},
-                    {data: 'created_at', title: 'Logged In At'},
+                    {data: 'created_at', title: 'Logged In Time'},
                 ],
                 paging: true,
                 searching: true,
@@ -76,11 +76,6 @@ export default {
 </script>
 
 <style scoped>
-.margin-left-content {
-    margin-left: 220px;
-    margin-top: 10px;
-    width: calc(100% - 250px);
-}
 
 /deep/ .dt-search label {
     display: none; /* Hide the label only */

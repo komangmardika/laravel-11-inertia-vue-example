@@ -43,7 +43,7 @@ class LoginHistoryController extends Controller
                 return $logs->username;
             })
             ->addColumn('created_at', function ($logs) {
-                return Carbon::parse($logs->created_at)->format('d/m/Y');
+                return Carbon::parse($logs->created_at)->format('d/m/Y h:i:s');
             });
 
 

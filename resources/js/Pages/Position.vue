@@ -60,7 +60,7 @@ export default {
                     }
                 },
                 columns: [
-                    { data: 'id', title: 'ID' },
+                    { data: 'id', title: 'ID', className: 'text-end'},
                     { data: 'name', title: 'Position' },
                     { data: 'created_at', title: 'Created At' },
                 ],

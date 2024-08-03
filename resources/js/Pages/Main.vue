@@ -3,7 +3,7 @@
         <TopBar :username="user.name" />
         <SideNav />
 
-        <div class="margin-left-content">
+        <div class="margin-left-content shadow-lg">
             <slot></slot>
         </div>
 
@@ -44,7 +44,10 @@ export default {
 <style scoped>
 .margin-left-content {
     margin-left: 220px;
-    margin-top: 10px;
-    width: calc(100% - 250px);
+    margin-top: 20px;
+    width: calc(100% - 240px);
+    background: #fff;
+    padding: 40px 20px;
+    border-radius: 10px;
 }
 </style>
