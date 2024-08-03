@@ -19,7 +19,7 @@ class LoginHistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => mt_rand(6, 20),
+            'user_id' => mt_rand(1, 20),
             'created_at' => fake()->dateTimeBetween('-1 year', 'now')
         ];
     }

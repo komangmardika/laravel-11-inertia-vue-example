@@ -5,14 +5,24 @@ this repo is example of crud with minimal style. It uses latest Laravel 11 and I
 ## What to do to make it works
 <ul>
     <li>Clone this repo</li>
+    <li>Create Empty MySQL database</li>
+    <li>Fill .env file with your database credential</li>
+    <li>Open Terminal / CMD / Powershell / Bash</li>
+    <li>Run: <i>composer i</i></li>
+    <li>Run: <i>npm i</i></li>
+    <li>Run: <i>php artisan migrate</i></li>
+    <li>Run: <i>php artisan db:seed</i></li>
+</ul>
+Run this additional for dummy data (you can skip this step):
+<ul>
+    <li>Run: <i>php artisan php artisan db:seed --class=LoginHistorySeeder</i></li>
+    <li>Run: <i>php artisan db:seed --class=EmployeeSeeder</i></li>
 </ul>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Now Run the app!
+ <ul>
+    <li>Run: <i>php artisan serve</i></li>
+    <li>Run: <i>npm run dev</i></li>
+</ul>
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Open your app on your favorite browser http://localhost:8080/login
