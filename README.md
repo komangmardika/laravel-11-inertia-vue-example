@@ -26,3 +26,4 @@ Now Run the app!
 </ul>
 
 Open your app on your favorite browser http://localhost:8080/login
+Log in with username / password: test@example.com / 123456
