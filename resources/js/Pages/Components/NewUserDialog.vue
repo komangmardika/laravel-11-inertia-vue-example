@@ -89,10 +89,20 @@ export default {
         closeDialog() {
             this.$emit('close');
         },
+        openDialog() {
+            this.$emit('open');
+        },
         addItem() {
-            this.form.positions.push(this.selectedPosition.label);
+            this.form.positions.push(this.selectedPosition);
             this.selectedPosition = null;
         },
+    },
+    watch: {
+        isVisible(newVal, oldVal) {
+            if(newVal) {
+                this.loadUnitAndPosition();
+            }
+        }
     },
     setup(props, {emit}) {
         const { proxy } = getCurrentInstance();
@@ -103,7 +113,7 @@ export default {
         const selectedPosition = ref(null);
         const toast = useToast();
 
-        onMounted(async () => {
+        const loadUnitAndPosition = async () => {
             const responseUnit = await axios.get('/units');
             units.value = responseUnit.data.map(unit => ({
                 id: unit.unit_name,
@@ -115,6 +125,10 @@ export default {
                 id: position.position_name,
                 label: position.position_name
             }));
+        }
+
+        onMounted(async () => {
+            await loadUnitAndPosition();
         });
 
         const form = ref({
@@ -129,7 +143,6 @@ export default {
         const { errors } = usePage().props.value;
 
         const addNewUser = () => {
-            form.value.unit_id = form.value.unit_id.label;
             axios.post('/add-new-user', form.value).then(() => {
                 form.value.name = '';
                 form.value.username = '';
@@ -153,6 +166,7 @@ export default {
         return {
             form,
             addNewUser,
+            loadUnitAndPosition,
             errors,
             units,
             positions,

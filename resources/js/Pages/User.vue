@@ -6,6 +6,7 @@
                 :title="'Add New Employee'"
                 :isVisible="isDialogVisible"
                 @userAdded="refreshDataTable"
+                @open="showDialog"
                 @close="closeDialog"></NewUserDialog>
             <DataTable
                 :key="dataTableKey"
@@ -91,10 +92,12 @@ export default {
         }
     },
     methods: {
-        closeDialog() {
+        closeDialog($event) {
+            console.log('y',$event);
             this.isDialogVisible = false;
         },
-        showDialog() {
+        showDialog($event) {
+            console.log('x',$event)
             this.isDialogVisible = true;
         },
         async refreshDataTable() {
