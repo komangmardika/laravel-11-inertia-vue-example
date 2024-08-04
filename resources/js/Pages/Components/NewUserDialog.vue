@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn w-100 btn-outline-primary">Add New User</button>
+                            <button type="submit" class="btn w-100 btn-outline-primary">Add New Employee</button>
                         </div>
                     </form>
                 </div>
@@ -71,7 +71,6 @@ import {usePage} from "@inertiajs/inertia-vue3";
 import axios from 'axios';
 import 'vue-select/dist/vue-select.css'; // Import CSS
 import vSelect from 'vue-select';
-import toast from "bootstrap/js/src/toast.js";
 import { useToast } from 'vue-toastification';
 
 export default {
@@ -169,6 +168,7 @@ export default {
 .modal {
     display: block;
     background: rgba(0, 0, 0, 0.5);
+    margin-top: 50px;
 }
 * {
     font-size: 12px;

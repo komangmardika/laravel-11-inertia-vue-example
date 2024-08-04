@@ -1,6 +1,6 @@
 <template>
     <header class="top-bar d-flex justify-content-between">
-        <div clas>Laravel 11 with InertiaJS and Vue 3</div>
+        <div >Laravel 11 with InertiaJS and Vue 3</div>
         <div>
             Welcome, <b>{{username}}</b> - <span @click="logout">logout</span>
         </div>
@@ -49,5 +49,9 @@ export default {
     height: 50px;
     font-size: 12px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 </style>

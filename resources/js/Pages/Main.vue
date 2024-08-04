@@ -44,10 +44,10 @@ export default {
 <style scoped>
 .margin-left-content {
     margin-left: 220px;
-    margin-top: 20px;
+    margin-top: 60px;
     width: calc(100% - 240px);
     background: #fff;
-    padding: 40px 20px;
+    padding: 30px 20px;
     border-radius: 10px;
 }
 </style>

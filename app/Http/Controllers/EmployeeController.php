@@ -16,7 +16,7 @@ class EmployeeController extends Controller
         return Inertia::render('User');
     }
 
-    public function employeePaginated(Request $request)
+    public function employeePaginated(Request $request): \Illuminate\Http\JsonResponse
     {
         $employees = User::with('unit', 'positions')->orderBy('id', 'desc');
 
