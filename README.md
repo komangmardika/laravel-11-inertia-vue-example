@@ -25,5 +25,5 @@ Now Run the app!
     <li>Run: <i>npm run dev</i></li>
 </ul>
 
-Open your app on your favorite browser http://localhost:8080/login
+Open your app on your favorite browser http://localhost:8000/login
 Log in with username / password: test@example.com / 123456
