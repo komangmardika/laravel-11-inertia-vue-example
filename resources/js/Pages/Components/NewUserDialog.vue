@@ -93,7 +93,7 @@ export default {
             this.$emit('open');
         },
         addItem() {
-            this.form.positions.push(this.selectedPosition);
+            this.form.positions.push(this.selectedPosition.label);
             this.selectedPosition = null;
         },
     },
