@@ -14,6 +14,13 @@
                 class="display"
                 :options="dataTableOptions"
             >
+                <template #column-6="action">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary" @click="editEmployee(action.rowData)">Edit</button>
+                        <button type="button" class="btn btn-info" @click="viewEmployee(action.rowData)">View</button>
+                        <button type="button" class="btn btn-danger" @click="deleteEmployee(action.rowData)">Delete</button>
+                    </div>
+                </template>
             </DataTable>
     </Main>
 </template>
@@ -103,6 +110,15 @@ export default {
         async refreshDataTable() {
             this.isDialogVisible = false;
             this.dataTableKey += 1;
+        },
+        viewEmployee($event) {
+            console.log($event);
+        },
+        editEmployee($event) {
+            console.log($event);
+        },
+        deleteEmployee($event) {
+            console.log($event)
         }
     },
 }

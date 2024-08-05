@@ -40,6 +40,9 @@ class UnitController extends Controller
             })
             ->addColumn('created_at', function ($unit) {
                 return Carbon::parse($unit->created_at)->format('d/m/Y');
+            })
+            ->addColumn('action', function ($unit) {
+                return $unit->id;
             });
 
 

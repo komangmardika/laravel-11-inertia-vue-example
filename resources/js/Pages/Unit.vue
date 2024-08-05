@@ -6,6 +6,13 @@
             class="display"
             :options="dataTableOptions"
         >
+            <template #column-3="action">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary" @click="editUnit(action.rowData)">Edit</button>
+                    <button type="button" class="btn btn-info" @click="viewUnit(action.rowData)">View</button>
+                    <button type="button" class="btn btn-danger" @click="deleteUnit(action.rowData)">Delete</button>
+                </div>
+            </template>
         </DataTable>
     </Main>
 </template>
@@ -71,15 +78,21 @@ export default {
             }
         }
     },
+    methods: {
+        viewUnit($event) {
+            console.log($event);
+        },
+        editUnit($event) {
+            console.log($event);
+        },
+        deleteUnit($event) {
+            console.log($event);
+        }
+    }
 }
 </script>
 
 <style scoped>
-.margin-left-content {
-    margin-left: 220px;
-    margin-top: 10px;
-    width: calc(100% - 250px);
-}
 /deep/ .dt-search label {
     display: none; /* Hide the label only */
 }

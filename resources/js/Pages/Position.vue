@@ -6,6 +6,13 @@
             class="display"
             :options="dataTableOptions"
         >
+            <template #column-3="action">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary" @click="editPosition(action.rowData)">Edit</button>
+                    <button type="button" class="btn btn-info" @click="viewPosition(action.rowData)">View</button>
+                    <button type="button" class="btn btn-danger" @click="deletePosition(action.rowData)">Delete</button>
+                </div>
+            </template>
         </DataTable>
     </Main>
 </template>
@@ -71,6 +78,17 @@ export default {
             }
         }
     },
+    methods: {
+        viewPosition($event) {
+            console.log($event);
+        },
+        editPosition($event) {
+            console.log($event);
+        },
+        deletePosition($event) {
+            console.log($event);
+        }
+    }
 }
 </script>
 

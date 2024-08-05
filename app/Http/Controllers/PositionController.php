@@ -41,6 +41,9 @@ class PositionController extends Controller
             })
             ->addColumn('created_at', function ($positions) {
                 return Carbon::parse($positions->created_at)->format('d/m/Y');
+            })
+            ->addColumn('action', function ($positions) {
+                return $positions->id;
             });
 
 
