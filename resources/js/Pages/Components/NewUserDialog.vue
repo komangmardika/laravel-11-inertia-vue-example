@@ -15,7 +15,7 @@
                                 id="name"
                                 class="form-control"
                                 v-model="form.name"
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 required
                             >
                         </div>
@@ -27,7 +27,7 @@
                                 id="username"
                                 class="form-control"
                                 v-model="form.username"
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 required
                             >
                         </div>
@@ -39,7 +39,7 @@
                                 id="password"
                                 class="form-control"
                                 v-model="form.password"
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 required
                             >
                         </div>
@@ -51,7 +51,7 @@
                                 id="join_date"
                                 class="form-control"
                                 v-model="form.join_date"
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 required>
                         </div>
 
@@ -60,7 +60,7 @@
                             <v-select
                                 taggable
                                 push-tags
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 :options="units" v-model="form.unit_id" />
                         </div>
 
@@ -69,14 +69,14 @@
                             <v-select
                                 taggable
                                 push-tags
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                                 :options="positions"
                                 v-model="selectedPosition" />
                             <button
                                 type="button"
                                 class="mt-3 btn btn-outline-success"
                                 @click="addItem"
-                                :disabled="!addNew"
+                                :disabled="addNew === 'v'"
                             >Add Position</button>
                         </div>
 
@@ -90,10 +90,10 @@
 
                         <div class="d-grid">
                             <button
-                                v-if="addNew"
+                                v-if="['e','n'].includes(addNew)"
                                 type="submit"
                                 class="btn w-100 btn-outline-primary"
-                            >Add New Employee</button>
+                            >Ok, Save It!</button>
                         </div>
                     </form>
                 </div>
@@ -126,7 +126,7 @@ export default {
             type: Object,
         },
         addNew: {
-            type: Boolean,
+            type: String,
             default: false
         },
     },
@@ -247,5 +247,12 @@ export default {
 }
 * {
     font-size: 12px;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
 }
 </style>

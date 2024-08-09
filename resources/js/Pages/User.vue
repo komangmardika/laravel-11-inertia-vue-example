@@ -2,6 +2,7 @@
     <Main :auth="auth">
             <h1 style="font-size: 20px">Employee</h1>
             <button class="btn btn-outline-primary mt-5" @click="showDialog">Add New Employee</button>
+
             <NewUserDialog
                 :title="title"
                 :isVisible="isDialogVisible"
@@ -11,6 +12,7 @@
                 @open="showDialog"
                 @close="closeDialog">
             </NewUserDialog>
+
             <CommonDialog
                 :title="dialogDeleteTitle"
                 :content="'Are you sure want to delete this data?'"
@@ -18,6 +20,7 @@
                 @close="closeConfirmationDelete"
                 @ok="doDelete"
             ></CommonDialog>
+
             <DataTable
                 :key="dataTableKey"
                 ref="dataTable"
@@ -68,7 +71,7 @@ export default {
         return {
             isDialogVisible: false,
             isConfirmDeleteVisible: false,
-            modeAddNew: false,
+            modeAddNew: 'n',
             dataTableKey: 0, // Initialize the key
             title: 'Add New Employee',
             dialogDeleteTitle: 'Delete Employee',
@@ -126,7 +129,7 @@ export default {
         showDialog($event) {
             this.isDialogVisible = true;
             this.title = 'Add New Employee';
-            this.modeAddNew = true;
+            this.modeAddNew = 'n';
 
         },
         showDialog2() {
@@ -137,19 +140,19 @@ export default {
             this.dataTableKey += 1;
         },
         viewEmployee($event) {
-            this.modeAddNew = false;
+            this.modeAddNew = 'v';
             this.data = $event;
             this.title = 'View Employee';
             this.showDialog2();
         },
         editEmployee($event) {
-            this.modeAddNew = false;
+            this.modeAddNew = 'e';
             this.data = $event;
             this.title = 'Edit Employee';
             this.showDialog2()
         },
         deleteEmployee($event) {
-            this.modeAddNew = false;
+            this.modeAddNew = 'd';
             this.data = $event;
             this.isConfirmDeleteVisible = true;
         },
@@ -166,5 +169,12 @@ export default {
 }
 * {
    font-size: 12px;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
 }
 </style>
