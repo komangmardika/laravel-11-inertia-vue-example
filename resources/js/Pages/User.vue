@@ -9,7 +9,15 @@
                 :data="data"
                 @userAdded="refreshDataTable"
                 @open="showDialog"
-                @close="closeDialog"></NewUserDialog>
+                @close="closeDialog">
+            </NewUserDialog>
+            <CommonDialog
+                :title="dialogDeleteTitle"
+                :content="'Are you sure want to delete this data?'"
+                :isVisible="isConfirmDeleteVisible"
+                @close="closeConfirmationDelete"
+                @ok="doDelete"
+            ></CommonDialog>
             <DataTable
                 :key="dataTableKey"
                 ref="dataTable"
@@ -39,6 +47,7 @@ import 'datatables.net-dt/css/dataTables.dataTables.min.css';
 DataTable.use(DataTablesLib);
 import axios from 'axios';
 import Main from "./Main.vue";
+import CommonDialog from "./Components/CommonDialog.vue";
 
 export default {
     name: 'Employee',
@@ -46,6 +55,7 @@ export default {
         auth: Object,
     },
     components: {
+        CommonDialog,
         Main,
         NewUserDialog,
         TopBar,
@@ -57,10 +67,12 @@ export default {
     data() {
         return {
             isDialogVisible: false,
+            isConfirmDeleteVisible: false,
             modeAddNew: false,
             dataTableKey: 0, // Initialize the key
+            title: 'Add New Employee',
+            dialogDeleteTitle: 'Delete Employee',
             data: {
-                title: 'Add New Employee'
             },
             dataTableOptions: {
                 processing: true,
@@ -106,11 +118,12 @@ export default {
     },
     methods: {
         closeDialog($event) {
-            console.log('y',$event);
             this.isDialogVisible = false;
         },
+        closeConfirmationDelete($event) {
+          this.isConfirmDeleteVisible = false;
+        },
         showDialog($event) {
-            console.log('x',$event)
             this.isDialogVisible = true;
             this.title = 'Add New Employee';
             this.modeAddNew = true;
@@ -124,23 +137,24 @@ export default {
             this.dataTableKey += 1;
         },
         viewEmployee($event) {
-            console.log($event);
             this.modeAddNew = false;
             this.data = $event;
             this.title = 'View Employee';
             this.showDialog2();
         },
         editEmployee($event) {
-            console.log($event);
             this.modeAddNew = false;
             this.data = $event;
             this.title = 'Edit Employee';
             this.showDialog2()
         },
         deleteEmployee($event) {
-            console.log($event);
             this.modeAddNew = false;
             this.data = $event;
+            this.isConfirmDeleteVisible = true;
+        },
+        doDelete($event) {
+
         }
     },
 }
