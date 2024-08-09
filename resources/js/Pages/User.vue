@@ -3,8 +3,10 @@
             <h1 style="font-size: 20px">Employee</h1>
             <button class="btn btn-outline-primary mt-5" @click="showDialog">Add New Employee</button>
             <NewUserDialog
-                :title="'Add New Employee'"
+                :title="title"
                 :isVisible="isDialogVisible"
+                :add-new="modeAddNew"
+                :data="data"
                 @userAdded="refreshDataTable"
                 @open="showDialog"
                 @close="closeDialog"></NewUserDialog>
@@ -55,7 +57,11 @@ export default {
     data() {
         return {
             isDialogVisible: false,
+            modeAddNew: false,
             dataTableKey: 0, // Initialize the key
+            data: {
+                title: 'Add New Employee'
+            },
             dataTableOptions: {
                 processing: true,
                 serverSide: true,
@@ -106,6 +112,12 @@ export default {
         showDialog($event) {
             console.log('x',$event)
             this.isDialogVisible = true;
+            this.title = 'Add New Employee';
+            this.modeAddNew = true;
+
+        },
+        showDialog2() {
+            this.isDialogVisible = true;
         },
         async refreshDataTable() {
             this.isDialogVisible = false;
@@ -113,12 +125,22 @@ export default {
         },
         viewEmployee($event) {
             console.log($event);
+            this.modeAddNew = false;
+            this.data = $event;
+            this.title = 'View Employee';
+            this.showDialog2();
         },
         editEmployee($event) {
             console.log($event);
+            this.modeAddNew = false;
+            this.data = $event;
+            this.title = 'Edit Employee';
+            this.showDialog2()
         },
         deleteEmployee($event) {
-            console.log($event)
+            console.log($event);
+            this.modeAddNew = false;
+            this.data = $event;
         }
     },
 }

@@ -10,22 +10,49 @@
                     <form @submit.prevent="addNewUser">
                         <div class="form-group mb-3">
                             <label for="name">Full Name:</label>
-                            <input type="text" id="name" class="form-control" v-model="form.name" required>
+                            <input
+                                type="text"
+                                id="name"
+                                class="form-control"
+                                v-model="form.name"
+                                :disabled="!addNew"
+                                required
+                            >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="username">Username:</label>
-                            <input type="email" id="username" class="form-control" v-model="form.username" required>
+                            <input
+                                type="email"
+                                id="username"
+                                class="form-control"
+                                v-model="form.username"
+                                :disabled="!addNew"
+                                required
+                            >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="username">Password:</label>
-                            <input type="password" id="password" class="form-control" v-model="form.password" required>
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                v-model="form.password"
+                                :disabled="!addNew"
+                                required
+                            >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="username">Join Date:</label>
-                            <input type="date" id="join_date" class="form-control" v-model="form.join_date" required>
+                            <input
+                                type="date"
+                                id="join_date"
+                                class="form-control"
+                                v-model="form.join_date"
+                                :disabled="!addNew"
+                                required>
                         </div>
 
                         <div class="form-group mb-3">
@@ -33,6 +60,7 @@
                             <v-select
                                 taggable
                                 push-tags
+                                :disabled="!addNew"
                                 :options="units" v-model="form.unit_id" />
                         </div>
 
@@ -41,9 +69,15 @@
                             <v-select
                                 taggable
                                 push-tags
+                                :disabled="!addNew"
                                 :options="positions"
                                 v-model="selectedPosition" />
-                            <button type="button" class="mt-3 btn btn-outline-success" @click="addItem">Add Position</button>
+                            <button
+                                type="button"
+                                class="mt-3 btn btn-outline-success"
+                                @click="addItem"
+                                :disabled="!addNew"
+                            >Add Position</button>
                         </div>
 
                         <div class="mb-3">
@@ -55,7 +89,11 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn w-100 btn-outline-primary">Add New Employee</button>
+                            <button
+                                v-if="addNew"
+                                type="submit"
+                                class="btn w-100 btn-outline-primary"
+                            >Add New Employee</button>
                         </div>
                     </form>
                 </div>
@@ -83,7 +121,14 @@ export default {
         isVisible: {
             type: Boolean,
             default: false
-        }
+        },
+        data: {
+            type: Object,
+        },
+        addNew: {
+            type: Boolean,
+            default: false
+        },
     },
     methods: {
         closeDialog() {
@@ -102,6 +147,9 @@ export default {
             if(newVal) {
                 this.loadUnitAndPosition();
             }
+        },
+        data(newVal, oldVal) {
+            this.fillForm();
         }
     },
     setup(props, {emit}) {
@@ -140,6 +188,20 @@ export default {
             positions: []
         });
 
+        const fillForm = () => {
+            form.value.positions = [];
+            form.value.name = props.data.name;
+            form.value.username = props.data.username;
+            form.value.join_date = props.data.join_date_r;
+            form.value.password = '';
+            form.value.unit_id = props.data.unit;
+            let x = JSON.parse(props.data.position_r);
+            x.forEach(y => {
+                form.value.positions.push(y.position_name)
+            });
+
+        }
+
         const { errors } = usePage().props.value;
 
         const addNewUser = () => {
@@ -159,14 +221,13 @@ export default {
                 console.log(errors);
                 toast.error('Failed to add user');
             });
-
-
         };
 
         return {
             form,
             addNewUser,
             loadUnitAndPosition,
+            fillForm,
             errors,
             units,
             positions,

@@ -48,9 +48,12 @@ class EmployeeController extends Controller
             ->addColumn('join_date', function ($employee) {
                 return Carbon::parse($employee->join_date)->format('d/m/Y');
             })
-            ->addColumn('action', function ($employee) {
-            return $employee->id;
-             });
+            ->addColumn('join_date_r', function ($employee) {
+                return Carbon::parse($employee->join_date)->format('Y-m-d');
+            })
+            ->addColumn('position_r', function ($employee) {
+                return $employee->positions;
+            });
 
 
         // Apply pagination and ordering
